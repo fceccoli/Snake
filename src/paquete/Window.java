@@ -7,14 +7,14 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 public class Window extends JFrame implements Runnable {
-	public boolean isRunning;
+	public static Window window = null;
+	public boolean isRunning;	
 	
+	public int currentState;
+	public Scene currentScene;
 	
-	public static int currentState;
-	public static Scene currentScene;
-	
-	public static KL keyListener = new KL();
-	public static ML mouseListener = new ML();
+	public KL keyListener = new KL();
+	public ML mouseListener = new ML();
 	
 	
 	public Window(int width, int height, String title) {
@@ -23,33 +23,42 @@ public class Window extends JFrame implements Runnable {
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addKeyListener(Window.keyListener);
+		addKeyListener(keyListener);
 		addMouseListener(mouseListener);
 		addMouseMotionListener(mouseListener);
 		
 		
 		isRunning = true;
-		Window.changeState(0);
+		changeState(0);
 	}
 	
 	
-	public static void close() {
+	public static Window getWindow() {
+		if(Window.window == null) {
+			Window.window = new Window(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, Constants.SCREEN_TITLE);
+		}
 		
+		return Window.window;
 	}
 	
 	
-	public static void changeState(int newState) {
-		Window.currentState = newState;
-		switch(Window.currentState) {
+	public void close() {
+		isRunning = false;
+	}
+	
+	
+	public void changeState(int newState) {
+		currentState = newState;
+		switch(currentState) {
 			case 0:
-				Window.currentScene = new MenuScene(Window.keyListener, Window.mouseListener);
+				currentScene = new MenuScene(keyListener, mouseListener);
 				break;
 			case 1:
-				Window.currentScene = new GameScene();
+				currentScene = new GameScene();
 				break;
 			default:
 				System.out.println("Unknow scene.");
-				Window.currentScene = null;
+				currentScene = null;
 				break;
 		}
 	}
@@ -86,6 +95,8 @@ public class Window extends JFrame implements Runnable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		this.dispose();
 		
 	}
 
