@@ -85,8 +85,12 @@ public class Snake {
 	
 	public boolean intersectingWithSelf() {
 		Rect headR = body[head];
-		for (int i = tail; i != head - 1; i = (i+1)% body.length) {
-			if (intersecting(headR, body[i])) return true;
+		return intersectingWithRect(headR);
+	}
+	
+	public boolean intersectingWithRect(Rect rect) {
+		for (int i = tail; i != head; i = (i+1)% body.length) {
+			if (intersecting(rect, body[i])) return true;
 		}
 		return false;
 	}
@@ -94,6 +98,10 @@ public class Snake {
 	public boolean intersecting (Rect r1, Rect r2) {
 		return(r1.x >= r2.x && r1.x + r1.width <= r2.x + r2.width && 
 				r1.y >= r2.y && r1.y + r1.height <= r2.y + r2.height);
+	}
+	
+	public void grow() {
+		System.out.println("Growing");
 	}
 	
 	public void draw(Graphics2D g2) {
