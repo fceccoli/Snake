@@ -39,7 +39,7 @@ public class Snake {
 	public void changeDirection(Direction newDirection) {
 		if (newDirection == Direction.RIGHT && direction !=Direction.LEFT) 
 		direction = newDirection;
-		 else if(newDirection == Direction.LEFT && direction != Direction.RIGHT) 
+		else if(newDirection == Direction.LEFT && direction != Direction.RIGHT) 
 		direction = newDirection;	
 		else if(newDirection == Direction.UP && direction != Direction.DOWN) 
 			direction = newDirection;
