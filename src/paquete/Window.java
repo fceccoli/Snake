@@ -10,6 +10,7 @@ public class Window extends JFrame implements Runnable {
 	public static Window window = null;
 	public boolean isRunning;	
 	
+	
 	public int currentState;
 	public Scene currentScene;
 	
